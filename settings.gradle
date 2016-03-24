@@ -1,1 +1,1 @@
-include "nc-classroom-grizzly", "nc-classroom-engine", "nc-classroom-jackson"
+include "tioga-skeleton-grizzly", "tioga-skeleton-engine"
