@@ -1,1 +1,1 @@
-include "tioga-skeleton-grizzly", "tioga-skeleton-engine"
+include "tioga-skeleton-grizzly", "tioga-skeleton-engine", "tioga-skeleton-pub"

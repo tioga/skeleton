@@ -1,8 +1,10 @@
 project(":tioga-skeleton-engine") {
 
-    version = tiogaAppVersion
+    version = skeletonAppVersion
 
     dependencies {
+        compile(project(":tioga-skeleton-pub"))
+
         compile("org.tiogasolutions.lib:tioga-lib-jaxrs:+")
         compile("javax.annotation:javax.annotation-api:+")
         compile("org.tiogasolutions.lib:tioga-lib-couchace:+")

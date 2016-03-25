@@ -33,6 +33,8 @@
       <module name="tioga-skeleton-engine_test" target="1.8" />
       <module name="tioga-skeleton-grizzly_main" target="1.8" />
       <module name="tioga-skeleton-grizzly_test" target="1.8" />
+      <module name="tioga-skeleton-pub_main" target="1.8" />
+      <module name="tioga-skeleton-pub_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />
@@ -66,6 +68,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/tioga-skeleton-engine" />
             <option value="$PROJECT_DIR$/tioga-skeleton-grizzly" />
+            <option value="$PROJECT_DIR$/tioga-skeleton-pub" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
@@ -119,6 +122,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-grizzly/tioga-skeleton-grizzly.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-grizzly/tioga-skeleton-grizzly.iml" group="tioga-skeleton-grizzly" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-grizzly/tioga-skeleton-grizzly_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-grizzly/tioga-skeleton-grizzly_main.iml" group="tioga-skeleton-grizzly" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-grizzly/tioga-skeleton-grizzly_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-grizzly/tioga-skeleton-grizzly_test.iml" group="tioga-skeleton-grizzly" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub.iml" group="tioga-skeleton-pub" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_main.iml" group="tioga-skeleton-pub" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_test.iml" group="tioga-skeleton-pub" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
@@ -1048,6 +1054,7 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-couchace/5.1.4/29ccb931d25af0d3058085fdefb918c38d1a36a9/tioga-lib-couchace-5.1.4-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-couchace/5.1.4/tioga-lib-couchace-5.1.4-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.tiogasolutions.lib:tioga-lib-jaxrs:5.1.0">
@@ -1057,6 +1064,7 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-jaxrs/5.1.0/d116655a56628c8609fbc3c5c8b4f418a8b50694/tioga-lib-jaxrs-5.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-jaxrs/5.1.0/tioga-lib-jaxrs-5.1.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.tiogasolutions.lib:tioga-lib-spring:1.2.1">
@@ -1066,6 +1074,7 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-spring/1.2.1/9eb523add16fd6f1b11bb172e5c78502122c5a70/tioga-lib-spring-1.2.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-spring/1.2.1/tioga-lib-spring-1.2.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.tiogasolutions.notify:tioga-notify-notifier:5.0.2">

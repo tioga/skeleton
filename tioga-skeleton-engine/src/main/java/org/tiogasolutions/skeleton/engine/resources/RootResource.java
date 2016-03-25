@@ -15,7 +15,6 @@ import org.tiogasolutions.app.standard.session.Session;
 import org.tiogasolutions.app.standard.session.SessionStore;
 import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafContent;
 import org.tiogasolutions.dev.common.EqualsUtils;
-import org.tiogasolutions.dev.common.net.InetMediaType;
 import org.tiogasolutions.skeleton.engine.mock.Account;
 import org.tiogasolutions.skeleton.engine.mock.AccountStore;
 import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
@@ -68,7 +67,7 @@ public class RootResource extends RootResourceSupport {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public ThymeleafContent getIndex() throws IOException {
-        IndexModel indexModel = new IndexModel(null, accountStore.getAll());
+        IndexModel indexModel = new IndexModel(null, accountStore.getAll(0, Integer.MAX_VALUE));
         return new ThymeleafContent("index", indexModel);
     }
 
@@ -98,11 +97,9 @@ public class RootResource extends RootResourceSupport {
         return Response.seeOther(other).cookie(sessionCookie).build();
     }
 
-    @GET
-    @Produces(InetMediaType.APPLICATION_JSON_VALUE)
     @Path("/api")
-    public Account getApi() throws Exception {
-        return accountStore.findByEmail("mickey.mouse@disney.com");
+    public ApiResource getApi() throws Exception {
+        return new ApiResource(uriInfo, accountStore);
     }
 
     private Cookie getSessionCookie() {

@@ -24,7 +24,7 @@ public class SkeletonAuthenticationResponseFactory implements StandardAuthentica
     @Override
     public Response createForbiddenResponse(ContainerRequestContext requestContext) {
         String msg = "You do not have permission to access this page.";
-        RootResource.IndexModel indexModel = new RootResource.IndexModel(msg, accountStore.getAll());
+        RootResource.IndexModel indexModel = new RootResource.IndexModel(msg, accountStore.getAll(0, Integer.MAX_VALUE));
         ThymeleafContent content = new ThymeleafContent("forbidden", indexModel);
         Response.ResponseBuilder builder = Response.status(401).entity(content );
 
@@ -41,7 +41,7 @@ public class SkeletonAuthenticationResponseFactory implements StandardAuthentica
     @Override
     public Response createUnauthorizedResponse(ContainerRequestContext requestContext, String authenticationScheme) {
         String msg = "Invalid username or password";
-        RootResource.IndexModel indexModel = new RootResource.IndexModel(msg, accountStore.getAll());
+        RootResource.IndexModel indexModel = new RootResource.IndexModel(msg, accountStore.getAll(0, Integer.MAX_VALUE));
         ThymeleafContent content = new ThymeleafContent("index", indexModel);
         Response.ResponseBuilder builder = Response.status(401).entity(content );
 
