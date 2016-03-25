@@ -1,4 +1,4 @@
-package org.tiogasolutions.skeleton.grizzly;
+package org.tiogasolutions.skeleton.engine.support;
 
 import org.tiogasolutions.app.standard.jaxrs.auth.RequestFilterAuthenticator;
 import org.tiogasolutions.app.standard.session.Session;

@@ -28,6 +28,8 @@ import org.tiogasolutions.runners.grizzly.GrizzlyServerConfig;
 import org.tiogasolutions.skeleton.engine.kernel.CouchServersConfig;
 import org.tiogasolutions.skeleton.engine.mock.AccountStore;
 import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
+import org.tiogasolutions.skeleton.engine.support.SkeletonBasicRequestFilterAuthenticator;
+import org.tiogasolutions.skeleton.engine.support.SkeletonFormRequestFilterAuthenticator;
 
 import java.util.Collections;
 import java.util.List;
