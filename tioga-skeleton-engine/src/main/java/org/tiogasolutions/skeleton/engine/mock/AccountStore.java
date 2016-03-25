@@ -2,7 +2,9 @@ package org.tiogasolutions.skeleton.engine.mock;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -23,5 +25,9 @@ public class AccountStore {
 
     public Account findByEmail(String email) {
         return map.get(email);
+    }
+
+    public Collection<Account> getAll() {
+        return map.values();
     }
 }

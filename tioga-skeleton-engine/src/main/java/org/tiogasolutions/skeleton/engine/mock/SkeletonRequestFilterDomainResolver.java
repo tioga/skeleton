@@ -20,12 +20,10 @@ public class SkeletonRequestFilterDomainResolver implements StandardRequestFilte
         this.accountStore = accountStore;
     }
 
-
     @Override
     public Object getDomain(ContainerRequestContext requestContext) {
         Session session = sessionStore.getSession(requestContext);
         if (session == null) return null;
-
         return session.get("account");
     }
 

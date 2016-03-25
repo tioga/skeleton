@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.tiogasolutions.app.standard.jaxrs.filters.StandardRequestFilterConfig;
+import org.tiogasolutions.app.standard.readers.StaticContentReader;
 import org.tiogasolutions.app.standard.session.Session;
 import org.tiogasolutions.app.standard.session.SessionStore;
 import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafContent;
@@ -22,6 +23,9 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Path("/")
 @Scope(value = "prototype")
@@ -38,9 +42,6 @@ public class RootResource extends RootResourceSupport {
     private UriInfo uriInfo;
 
     @Context
-    private Cookie[] cookies = new Cookie[0];
-
-    @Context
     private ContainerRequestContext requestContext;
 
     @Autowired
@@ -52,6 +53,9 @@ public class RootResource extends RootResourceSupport {
     @Autowired
     private StandardRequestFilterConfig standardRequestFilterConfig;
 
+    @Autowired
+    private StaticContentReader staticContentReader;
+
     public RootResource() {
         log.info("Created ");
     }
@@ -61,11 +65,14 @@ public class RootResource extends RootResourceSupport {
         return uriInfo;
     }
 
+    @Override
+    public StaticContentReader getStaticContentReader() {
+        return staticContentReader;
+    }
+
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public ThymeleafContent getIndex(@QueryParam(REASON_CODE_QUERY_PARAM_NAME) String reasonCode,
-                                     @QueryParam("email") String email,
-                                     @QueryParam("password") String password) throws IOException {
+    public ThymeleafContent getIndex(@QueryParam(REASON_CODE_QUERY_PARAM_NAME) String reasonCode) throws IOException {
 
         String message = "";
         if (REASON_CODE_INVALID_USERNAME_OR_PASSWORD == reasonCode) {
@@ -76,58 +83,59 @@ public class RootResource extends RootResourceSupport {
             message = "You have successfully signed out";
         }
 
-        return new ThymeleafContent("index", new IndexModel(message));
+        Collection<Account> accounts = accountStore.getAll();
+        return new ThymeleafContent("index", new IndexModel(message, accounts));
     }
 
     @POST
     @Path("/sign-in")
     @Produces(MediaType.TEXT_HTML)
     public Response signIn(@FormParam("email") String email, @FormParam("password") String password) throws Exception {
-        Cookie cookie = getSessionCookie();
-
         Account account = accountStore.findByEmail(email);
 
         if (account == null || EqualsUtils.objectsNotEqual(account.getPassword(), password)) {
-            sessionStore.remove(cookie);
-            NewCookie deleteSessionCookie = sessionStore.newSessionCookie(requestContext);
 
-            URI other = getUriInfo()
+            Response.ResponseBuilder builder = Response.seeOther(getUriInfo()
                     .getBaseUriBuilder()
                     .path(standardRequestFilterConfig.getUnauthorizedPath())
-                    .queryParam(REASON_CODE_QUERY_PARAM_NAME, REASON_CODE_INVALID_USERNAME_OR_PASSWORD)
-                    .build();
+                    .queryParam(REASON_CODE_QUERY_PARAM_NAME, REASON_CODE_INVALID_USERNAME_OR_PASSWORD).build());
 
-            return Response.seeOther(other).cookie(deleteSessionCookie).build();
+            Cookie cookie = getSessionCookie();
+            if (cookie != null) {
+                sessionStore.remove(cookie);
+                NewCookie deleteSessionCookie = new NewCookie(cookie, null, 0, true);
+                builder.cookie(deleteSessionCookie);
+            }
+
+            return builder.build();
         }
 
         // Create the new session for the currently logged in user.
         Session session = sessionStore.newSession();
         session.put("account", account);
 
-        NewCookie sessionCookie = sessionStore.newSessionCookie(requestContext);
+        NewCookie sessionCookie = sessionStore.newSessionCookie(session, uriInfo);
         URI other = getUriInfo().getBaseUriBuilder().path("welcome").build();
         return Response.seeOther(other).cookie(sessionCookie).build();
     }
 
     private Cookie getSessionCookie() {
-        for (Cookie cookie : cookies) {
-            if (EqualsUtils.objectsEqual(cookie.getName(), sessionStore.getCookieName())) {
-                return cookie;
-            }
-        }
-        return null;
+        String cookieName = sessionStore.getCookieName();
+        return requestContext.getCookies().get(cookieName);
     }
 
     public static class IndexModel {
         private final String message;
+        private final List<Account> accounts = new ArrayList<>();
 
-        public IndexModel(String message) {
+        public IndexModel(String message, Collection<Account> accounts) {
             this.message = message;
+            this.accounts.addAll(accounts);
         }
-
         public String getMessage() {
             return message;
         }
+        public List<Account> getAccounts() { return accounts; }
     }
 }
 

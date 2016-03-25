@@ -67,8 +67,6 @@ public class EngineSpringTestConfig {
         StandardRequestFilterConfig config = new StandardRequestFilterConfig();
         config.setUnauthorizedQueryParamName(RootResource.REASON_CODE_QUERY_PARAM_NAME);
         config.setUnauthorizedQueryParamValue(RootResource.REASON_CODE_UNAUTHORIZED_QUERY_PARAM_VALUE);
-        config.setSessionRequired(true);
-        config.setAuthenticationScheme("FORM_AUTH");
         config.setUnauthorizedPath("/");
         config.setRedirectUnauthorized(true);
         return config;

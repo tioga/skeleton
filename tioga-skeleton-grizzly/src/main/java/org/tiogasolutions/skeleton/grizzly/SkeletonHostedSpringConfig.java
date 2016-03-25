@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.tiogasolutions.app.standard.StandardApplication;
 import org.tiogasolutions.app.standard.execution.ExecutionManager;
 import org.tiogasolutions.app.standard.jackson.StandardObjectMapper;
+import org.tiogasolutions.app.standard.jaxrs.auth.AnonymousRequestFilterAuthenticator;
 import org.tiogasolutions.app.standard.jaxrs.filters.StandardRequestFilterConfig;
 import org.tiogasolutions.app.standard.jaxrs.filters.StandardResponseFilterConfig;
 import org.tiogasolutions.app.standard.readers.BundledStaticContentReader;
@@ -21,7 +22,7 @@ import org.tiogasolutions.dev.jackson.TiogaJacksonModule;
 import org.tiogasolutions.dev.jackson.TiogaJacksonTranslator;
 import org.tiogasolutions.lib.couchace.DefaultCouchServer;
 import org.tiogasolutions.notify.notifier.Notifier;
-import org.tiogasolutions.notify.sender.couch.CouchNotificationSender;
+import org.tiogasolutions.notify.notifier.send.LoggingNotificationSender;
 import org.tiogasolutions.runners.grizzly.GrizzlyServer;
 import org.tiogasolutions.runners.grizzly.GrizzlyServerConfig;
 import org.tiogasolutions.skeleton.engine.kernel.CouchServersConfig;
@@ -38,20 +39,26 @@ public class SkeletonHostedSpringConfig {
     // this helps ensure that both the ObjectMapper (used by JAX-RS) and the CouchDatabase is configured the same.
     private List<Module> jacksonModule = Collections.singletonList(new TiogaJacksonModule());
 
+//    @Bean
+//    public Notifier notifier(@Value("${skeleton.notifyCouchUrl}") String url,
+//                             @Value("${skeleton.notifyCouchUsername}") String username,
+//                             @Value("${skeleton.notifyCouchPassword}") String password,
+//                             @Value("${skeleton.notifyCouchDatabaseName}") String databaseName) {
+//
+//        CouchNotificationSender sender = new CouchNotificationSender(url, databaseName, username, password);
+//        return new Notifier(sender);
+//    }
     @Bean
-    public Notifier notifier(@Value("${skeleton.notifyCouchUrl}") String url,
-                             @Value("${skeleton.notifyCouchUsername}") String username,
-                             @Value("${skeleton.notifyCouchPassword}") String password,
-                             @Value("${skeleton.notifyCouchDatabaseName}") String databaseName) {
-
-        CouchNotificationSender sender = new CouchNotificationSender(url, databaseName, username, password);
+    public Notifier notifier() {
+        // CouchNotificationSender would be the preferred choice, but...
+        LoggingNotificationSender sender = new LoggingNotificationSender();
         return new Notifier(sender);
     }
 
     @Bean
     public ThymeleafMessageBodyWriterConfig thymeleafMessageBodyWriterConfig() {
         ThymeleafMessageBodyWriterConfig config = new ThymeleafMessageBodyWriterConfig();
-        config.setPathPrefix("/tioga-skeleton-engine/bundled");
+        config.setPathPrefix("/tioga-skeleton-engine/bundled/");
         config.setPathSuffix(".html");
         config.setCacheable(true);
         return config;
@@ -63,14 +70,25 @@ public class SkeletonHostedSpringConfig {
     }
 
     @Bean
-    public StandardRequestFilterConfig standardRequestFilterConfig() {
+    public StandardRequestFilterConfig standardRequestFilterConfig(SessionStore sessionStore) {
         StandardRequestFilterConfig config = new StandardRequestFilterConfig();
         config.setUnauthorizedQueryParamName(RootResource.REASON_CODE_QUERY_PARAM_NAME);
         config.setUnauthorizedQueryParamValue(RootResource.REASON_CODE_UNAUTHORIZED_QUERY_PARAM_VALUE);
-        config.setSessionRequired(true);
-        config.setAuthenticationScheme("FORM_AUTH");
         config.setUnauthorizedPath("/");
         config.setRedirectUnauthorized(true);
+
+        config.registerAuthenticator(AnonymousRequestFilterAuthenticator.SINGLETON,
+                "",             // home page
+                "sign-in",      // sing in page
+                "^js/.*",       // any javascript
+                "^css/.*",      // any css file
+                "^images/.*",   // any image
+                "favicon.ico"
+        );
+
+        // Everything else is secured
+        config.registerAuthenticator(new SkeletonRequestFilterAuthenticator(sessionStore), ".*");
+
         return config;
     }
 
@@ -88,7 +106,7 @@ public class SkeletonHostedSpringConfig {
 
     @Bean
     BundledStaticContentReader bundledStaticContentReader() {
-        return new BundledStaticContentReader("/tioga-skeleton-grizzly/bundled");
+        return new BundledStaticContentReader("/tioga-skeleton-engine/bundled/");
     }
 
     @Bean

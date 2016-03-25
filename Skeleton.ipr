@@ -68,6 +68,7 @@
             <option value="$PROJECT_DIR$/tioga-skeleton-grizzly" />
           </set>
         </option>
+        <option name="useAutoImport" value="true" />
       </GradleProjectSettings>
     </option>
   </component>
@@ -88,6 +89,9 @@
     <option name="PROJECT_PROFILE" value="Project Default" />
     <option name="USE_PROJECT_PROFILE" value="true" />
     <version value="1.0" />
+  </component>
+  <component name="JavaScriptLibraryMappings">
+    <file url="PROJECT" libraries="{bootstrap}" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -121,22 +125,24 @@
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="skeleton [clean]" type="GradleRunConfiguration" factoryName="Gradle" singleton="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
+    <configuration default="false" name="SkeletonMain" type="Application" factoryName="Application" singleton="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="org.tiogasolutions.skeleton.grizzly.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="org.tiogasolutions.skeleton.grizzly.SkeletonMain" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="tioga-skeleton-grizzly_main" />
+      <envs />
       <method />
     </configuration>
     <configuration default="false" name="skeleton [clean build]" type="GradleRunConfiguration" factoryName="Gradle" singleton="true">
@@ -171,6 +177,24 @@
           <list>
             <option value="clean" />
             <option value="install" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="false" name="skeleton [clean]" type="GradleRunConfiguration" factoryName="Gradle" singleton="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" value="" />
@@ -237,17 +261,6 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.CSS" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-  </component>
-  <component name="PublishConfigData">
-    <serverData>
-      <paths name="jacobp">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-    </serverData>
   </component>
   <component name="RunManager">
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -1028,31 +1041,31 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.dev/tioga-dev-jackson/4.2.4/8936e010594abb4c5b2dc9bdfe8fa242168653bb/tioga-dev-jackson-4.2.4-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.tiogasolutions.lib:tioga-lib-couchace:5.1.3">
+    <library name="Gradle: org.tiogasolutions.lib:tioga-lib-couchace:5.1.4">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-couchace/5.1.3/18f27bbf5f17472943ecb8a57c8db70c80b2793c/tioga-lib-couchace-5.1.3.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-couchace/5.1.4/tioga-lib-couchace-5.1.4.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-couchace/5.1.3/a060e3b0e6678a0ba9a699d5990303c407905947/tioga-lib-couchace-5.1.3-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-couchace/5.1.4/tioga-lib-couchace-5.1.4-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.tiogasolutions.lib:tioga-lib-jaxrs:5.0.1">
+    <library name="Gradle: org.tiogasolutions.lib:tioga-lib-jaxrs:5.1.0">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-jaxrs/5.0.1/91ad33911f7a8a78ddc1836b1cc65954bbbacfb/tioga-lib-jaxrs-5.0.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-jaxrs/5.1.0/tioga-lib-jaxrs-5.1.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-jaxrs/5.0.1/2e3f2b1bddc6a3ade016647a47e190d5c43b50f3/tioga-lib-jaxrs-5.0.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-jaxrs/5.1.0/tioga-lib-jaxrs-5.1.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.tiogasolutions.lib:tioga-lib-spring:1.2.0">
+    <library name="Gradle: org.tiogasolutions.lib:tioga-lib-spring:1.2.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-spring/1.2.0/46d7928aca672e2973b674c6454f624425027ece/tioga-lib-spring-1.2.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-spring/1.2.1/tioga-lib-spring-1.2.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-spring/1.2.0/6f64cbe4c709900d74a6dd0bf2bc2897ad41439c/tioga-lib-spring-1.2.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/tiogasolutions/lib/tioga-lib-spring/1.2.1/tioga-lib-spring-1.2.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: org.tiogasolutions.notify:tioga-notify-notifier:5.0.2">
