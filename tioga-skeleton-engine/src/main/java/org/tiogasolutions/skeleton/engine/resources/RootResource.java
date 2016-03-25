@@ -17,6 +17,7 @@ import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafContent;
 import org.tiogasolutions.dev.common.EqualsUtils;
 import org.tiogasolutions.skeleton.engine.mock.Account;
 import org.tiogasolutions.skeleton.engine.mock.AccountStore;
+import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -30,11 +31,6 @@ import java.util.List;
 @Path("/")
 @Scope(value = "prototype")
 public class RootResource extends RootResourceSupport {
-
-    public static final String REASON_CODE_QUERY_PARAM_NAME = "r";
-    public static final String REASON_CODE_UNAUTHORIZED_QUERY_PARAM_VALUE = "UNAUTHORIZED";
-    public static final String REASON_CODE_INVALID_USERNAME_OR_PASSWORD = "INVALID";
-    public static final String REASON_SIGNED_OUT = "OUT";
 
     private static final Log log = LogFactory.getLog(RootResource.class);
 
@@ -56,6 +52,9 @@ public class RootResource extends RootResourceSupport {
     @Autowired
     private StaticContentReader staticContentReader;
 
+    @Autowired
+    private SkeletonAuthenticationResponseFactory authenticationResponseFactory;
+
     public RootResource() {
         log.info("Created ");
     }
@@ -65,26 +64,18 @@ public class RootResource extends RootResourceSupport {
         return uriInfo;
     }
 
-    @Override
-    public StaticContentReader getStaticContentReader() {
-        return staticContentReader;
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public ThymeleafContent getIndex() throws IOException {
+        IndexModel indexModel = new IndexModel(null, accountStore.getAll());
+        return new ThymeleafContent("index", indexModel);
     }
 
     @GET
+    @Path("/welcome")
     @Produces(MediaType.TEXT_HTML)
-    public ThymeleafContent getIndex(@QueryParam(REASON_CODE_QUERY_PARAM_NAME) String reasonCode) throws IOException {
-
-        String message = "";
-        if (REASON_CODE_INVALID_USERNAME_OR_PASSWORD == reasonCode) {
-            message = "Invalid username or password";
-        } else if (REASON_CODE_UNAUTHORIZED_QUERY_PARAM_VALUE == reasonCode) {
-            message = "Your session has expired";
-        } else if (REASON_SIGNED_OUT == reasonCode) {
-            message = "You have successfully signed out";
-        }
-
-        Collection<Account> accounts = accountStore.getAll();
-        return new ThymeleafContent("index", new IndexModel(message, accounts));
+    public ThymeleafContent getWelcome() throws IOException {
+        return new ThymeleafContent("welcome", null);
     }
 
     @POST
@@ -94,20 +85,7 @@ public class RootResource extends RootResourceSupport {
         Account account = accountStore.findByEmail(email);
 
         if (account == null || EqualsUtils.objectsNotEqual(account.getPassword(), password)) {
-
-            Response.ResponseBuilder builder = Response.seeOther(getUriInfo()
-                    .getBaseUriBuilder()
-                    .path(standardRequestFilterConfig.getUnauthorizedPath())
-                    .queryParam(REASON_CODE_QUERY_PARAM_NAME, REASON_CODE_INVALID_USERNAME_OR_PASSWORD).build());
-
-            Cookie cookie = getSessionCookie();
-            if (cookie != null) {
-                sessionStore.remove(cookie);
-                NewCookie deleteSessionCookie = new NewCookie(cookie, null, 0, true);
-                builder.cookie(deleteSessionCookie);
-            }
-
-            return builder.build();
+            return authenticationResponseFactory.createUnauthorizedResponse(requestContext);
         }
 
         // Create the new session for the currently logged in user.

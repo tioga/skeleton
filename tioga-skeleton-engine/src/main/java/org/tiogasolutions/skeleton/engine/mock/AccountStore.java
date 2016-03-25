@@ -1,13 +1,9 @@
 package org.tiogasolutions.skeleton.engine.mock;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-@Component
 public class AccountStore {
 
     private final Map<String,Account> map = new HashMap<>();

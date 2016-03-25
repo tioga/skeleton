@@ -10,11 +10,11 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
 
-public class SkeletonRequestFilterAuthenticator implements RequestFilterAuthenticator {
+public class SkeletonFormRequestFilterAuthenticator implements RequestFilterAuthenticator {
 
     private final SessionStore sessionStore;
 
-    public SkeletonRequestFilterAuthenticator(SessionStore sessionStore) {
+    public SkeletonFormRequestFilterAuthenticator(SessionStore sessionStore) {
         this.sessionStore = sessionStore;
     }
 

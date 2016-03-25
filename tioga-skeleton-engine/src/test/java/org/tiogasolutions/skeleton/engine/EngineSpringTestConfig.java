@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.tiogasolutions.app.standard.StandardApplication;
 import org.tiogasolutions.app.standard.execution.ExecutionManager;
 import org.tiogasolutions.app.standard.jackson.StandardObjectMapper;
+import org.tiogasolutions.app.standard.jaxrs.auth.AnonymousRequestFilterAuthenticator;
 import org.tiogasolutions.app.standard.jaxrs.filters.StandardRequestFilterConfig;
 import org.tiogasolutions.app.standard.jaxrs.filters.StandardResponseFilterConfig;
 import org.tiogasolutions.app.standard.readers.MockContentReader;
@@ -19,7 +20,8 @@ import org.tiogasolutions.lib.couchace.DefaultCouchServer;
 import org.tiogasolutions.notify.notifier.Notifier;
 import org.tiogasolutions.notify.notifier.send.LoggingNotificationSender;
 import org.tiogasolutions.skeleton.engine.kernel.CouchServersConfig;
-import org.tiogasolutions.skeleton.engine.resources.RootResource;
+import org.tiogasolutions.skeleton.engine.mock.AccountStore;
+import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,17 +60,24 @@ public class EngineSpringTestConfig {
     }
 
     @Bean
+    public AccountStore accountStore() {
+        return new AccountStore();
+    }
+
+    @Bean
     public StandardResponseFilterConfig standardResponseFilterConfig() {
         return new StandardResponseFilterConfig();
     }
 
     @Bean
+    public SkeletonAuthenticationResponseFactory skeletonAuthenticationResponseFactory(AccountStore accountStore, SessionStore sessionStore) {
+        return new SkeletonAuthenticationResponseFactory(accountStore, sessionStore);
+    }
+
+    @Bean
     public StandardRequestFilterConfig standardRequestFilterConfig() {
         StandardRequestFilterConfig config = new StandardRequestFilterConfig();
-        config.setUnauthorizedQueryParamName(RootResource.REASON_CODE_QUERY_PARAM_NAME);
-        config.setUnauthorizedQueryParamValue(RootResource.REASON_CODE_UNAUTHORIZED_QUERY_PARAM_VALUE);
-        config.setUnauthorizedPath("/");
-        config.setRedirectUnauthorized(true);
+        config.registerAuthenticator(AnonymousRequestFilterAuthenticator.SINGLETON, ".*");
         return config;
     }
 

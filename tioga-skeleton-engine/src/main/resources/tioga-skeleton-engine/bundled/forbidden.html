@@ -18,33 +18,13 @@
     <!--/*@thymesVar id="it" type="org.tiogasolutions.skeleton.engine.resources.RootResource.IndexModel"*/-->
     <h1>Skeleton App</h1>
 
-    <p th:if="${it.getMessage() == null}">Nice to meet you. Now go away.</p>
-
-    <p th:if="${it.getMessage() != null}" class="alert alert-danger" role="alert">
+    <p class="alert alert-danger" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <span class="sr-only">Error:</span>
         <span th:text="${it.getMessage()}"></span>
     </p>
 
-    <form method="post" action="sign-in" style="width: 300px">
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input id="email" type="email" name="email" class="form-control" placeholder="Email" />
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input id="password" type="password" name="password" class="form-control" placeholder="Password" />
-        </div>
-        <button type="submit" class="btn btn-default">Sign In</button>
-    </form>
-
-    <div style="margin: 5em 0 1em 0">Need an a count?</div>
-    <div th:each="account : ${it.getAccounts()}">
-        <a th:onclick="'$(\'#email\').val(\'' + ${account.getEmail()} + '\'); $(\'#password\').val(\'' + ${account.getPassword()} + '\'); return false;'" href="#">
-            <span th:text="${account.getFirstName()}"></span>
-            <span th:text="${account.getLastName()}"></span>
-        </a>
-    </div>
+    <a href="/">Go back to where you came you foolish mortal!</a>
 
   </body>
 </html>

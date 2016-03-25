@@ -26,7 +26,8 @@ import org.tiogasolutions.notify.notifier.send.LoggingNotificationSender;
 import org.tiogasolutions.runners.grizzly.GrizzlyServer;
 import org.tiogasolutions.runners.grizzly.GrizzlyServerConfig;
 import org.tiogasolutions.skeleton.engine.kernel.CouchServersConfig;
-import org.tiogasolutions.skeleton.engine.resources.RootResource;
+import org.tiogasolutions.skeleton.engine.mock.AccountStore;
+import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -70,13 +71,20 @@ public class SkeletonHostedSpringConfig {
     }
 
     @Bean
-    public StandardRequestFilterConfig standardRequestFilterConfig(SessionStore sessionStore) {
-        StandardRequestFilterConfig config = new StandardRequestFilterConfig();
-        config.setUnauthorizedQueryParamName(RootResource.REASON_CODE_QUERY_PARAM_NAME);
-        config.setUnauthorizedQueryParamValue(RootResource.REASON_CODE_UNAUTHORIZED_QUERY_PARAM_VALUE);
-        config.setUnauthorizedPath("/");
-        config.setRedirectUnauthorized(true);
+    public AccountStore accountStore() {
+        return new AccountStore();
+    }
 
+    @Bean
+    public SkeletonAuthenticationResponseFactory skeletonAuthenticationResponseFactory(AccountStore accountStore, SessionStore sessionStore) {
+        return new SkeletonAuthenticationResponseFactory(accountStore, sessionStore);
+    }
+
+    @Bean
+    public StandardRequestFilterConfig standardRequestFilterConfig(SessionStore sessionStore, SkeletonAuthenticationResponseFactory responseFactory) {
+        StandardRequestFilterConfig config = new StandardRequestFilterConfig();
+
+        // The first list is everything that is unsecured.
         config.registerAuthenticator(AnonymousRequestFilterAuthenticator.SINGLETON,
                 "",             // home page
                 "sign-in",      // sing in page
@@ -86,8 +94,11 @@ public class SkeletonHostedSpringConfig {
                 "favicon.ico"
         );
 
+        // The second list is for the API
+        config.registerAuthenticator(new SkeletonBasicRequestFilterAuthenticator(responseFactory, "admin:secret"), "^api/.*");
+
         // Everything else is secured
-        config.registerAuthenticator(new SkeletonRequestFilterAuthenticator(sessionStore), ".*");
+        config.registerAuthenticator(new SkeletonFormRequestFilterAuthenticator(sessionStore), ".*");
 
         return config;
     }
@@ -101,7 +112,9 @@ public class SkeletonHostedSpringConfig {
 
     @Bean
     public SessionStore sessionStore(@Value("${skeleton.maxSessionDuration}") long maxSessionDuration) {
-        return new DefaultSessionStore(maxSessionDuration, "session-id");
+        // return new DefaultSessionStore(maxSessionDuration, "session-id"); // defaults to secure and httpOnly
+        // We are using this just for the sake of running on port 8080.
+        return new DefaultSessionStore(maxSessionDuration, "session-id", "/", null, null, false, false);
     }
 
     @Bean
