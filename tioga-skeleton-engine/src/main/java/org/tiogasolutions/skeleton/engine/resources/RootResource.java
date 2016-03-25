@@ -15,6 +15,7 @@ import org.tiogasolutions.app.standard.session.Session;
 import org.tiogasolutions.app.standard.session.SessionStore;
 import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafContent;
 import org.tiogasolutions.dev.common.EqualsUtils;
+import org.tiogasolutions.dev.common.net.InetMediaType;
 import org.tiogasolutions.skeleton.engine.mock.Account;
 import org.tiogasolutions.skeleton.engine.mock.AccountStore;
 import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
@@ -85,7 +86,7 @@ public class RootResource extends RootResourceSupport {
         Account account = accountStore.findByEmail(email);
 
         if (account == null || EqualsUtils.objectsNotEqual(account.getPassword(), password)) {
-            return authenticationResponseFactory.createUnauthorizedResponse(requestContext);
+            return authenticationResponseFactory.createUnauthorizedResponse(requestContext, SecurityContext.FORM_AUTH);
         }
 
         // Create the new session for the currently logged in user.
@@ -95,6 +96,13 @@ public class RootResource extends RootResourceSupport {
         NewCookie sessionCookie = sessionStore.newSessionCookie(session, uriInfo);
         URI other = getUriInfo().getBaseUriBuilder().path("welcome").build();
         return Response.seeOther(other).cookie(sessionCookie).build();
+    }
+
+    @GET
+    @Produces(InetMediaType.APPLICATION_JSON_VALUE)
+    @Path("/api")
+    public Account getApi() throws Exception {
+        return accountStore.findByEmail("mickey.mouse@disney.com");
     }
 
     private Cookie getSessionCookie() {

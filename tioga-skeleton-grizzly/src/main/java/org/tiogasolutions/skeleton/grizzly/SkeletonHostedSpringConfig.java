@@ -95,10 +95,10 @@ public class SkeletonHostedSpringConfig {
         );
 
         // The second list is for the API
-        config.registerAuthenticator(new SkeletonBasicRequestFilterAuthenticator(responseFactory, "admin:secret"), "^api/.*");
+        config.registerAuthenticator(new SkeletonBasicRequestFilterAuthenticator("admin:secret"), "api", "^api/.*");
 
         // Everything else is secured
-        config.registerAuthenticator(new SkeletonFormRequestFilterAuthenticator(sessionStore), ".*");
+        config.registerAuthenticator(new SkeletonFormRequestFilterAuthenticator(responseFactory, sessionStore), ".*");
 
         return config;
     }

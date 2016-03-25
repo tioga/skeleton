@@ -9,6 +9,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 public class SkeletonAuthenticationResponseFactory implements StandardAuthenticationResponseFactory {
 
@@ -38,11 +39,15 @@ public class SkeletonAuthenticationResponseFactory implements StandardAuthentica
     }
 
     @Override
-    public Response createUnauthorizedResponse(ContainerRequestContext requestContext) {
+    public Response createUnauthorizedResponse(ContainerRequestContext requestContext, String authenticationScheme) {
         String msg = "Invalid username or password";
         RootResource.IndexModel indexModel = new RootResource.IndexModel(msg, accountStore.getAll());
         ThymeleafContent content = new ThymeleafContent("index", indexModel);
         Response.ResponseBuilder builder = Response.status(401).entity(content );
+
+        if (SecurityContext.BASIC_AUTH.equals(authenticationScheme)) {
+            builder.header("WWW-Authenticate", "Basic");
+        }
 
         Cookie cookie = getSessionCookie(requestContext);
         if (cookie != null) {

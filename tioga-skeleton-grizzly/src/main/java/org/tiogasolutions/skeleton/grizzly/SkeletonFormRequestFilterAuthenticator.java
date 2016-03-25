@@ -5,6 +5,7 @@ import org.tiogasolutions.app.standard.session.Session;
 import org.tiogasolutions.app.standard.session.SessionStore;
 import org.tiogasolutions.dev.common.exceptions.ApiException;
 import org.tiogasolutions.skeleton.engine.mock.Account;
+import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.SecurityContext;
@@ -13,9 +14,16 @@ import java.security.Principal;
 public class SkeletonFormRequestFilterAuthenticator implements RequestFilterAuthenticator {
 
     private final SessionStore sessionStore;
+    private final SkeletonAuthenticationResponseFactory authenticationResponseFactory;
 
-    public SkeletonFormRequestFilterAuthenticator(SessionStore sessionStore) {
+    public SkeletonFormRequestFilterAuthenticator(SkeletonAuthenticationResponseFactory authenticationResponseFactory, SessionStore sessionStore) {
         this.sessionStore = sessionStore;
+        this.authenticationResponseFactory = authenticationResponseFactory;
+    }
+
+    @Override
+    public String getAuthenticationScheme() {
+        return SecurityContext.FORM_AUTH;
     }
 
     @Override
@@ -43,7 +51,7 @@ public class SkeletonFormRequestFilterAuthenticator implements RequestFilterAuth
             return secure;
         }
         @Override public String getAuthenticationScheme() {
-            return "FORM_AUTH";
+            return SecurityContext.FORM_AUTH;
         }
         @Override public Principal getUserPrincipal() {
             return account::getEmail;
