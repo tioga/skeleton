@@ -1,5 +1,7 @@
 project(":tioga-skeleton-engine") {
 
+    apply plugin: 'distribution'
+
     version = skeletonAppVersion
 
     dependencies {
@@ -34,5 +36,46 @@ project(":tioga-skeleton-engine") {
         })
     })
 
+    distributions {
+        main {
+            contents {
+                into("lib") {
+                    from(jar)
+                    from(project.configurations.runtime)
+                }
+            }
+        }
+    }
+
+    jar {
+        into("libs") {
+            from configurations.runtime
+        }
+        manifest {
+            attributes(
+                    "Implementation-Version": project.version,
+                    "Main-Class": "org.tiogasolutions.skeleton.engine.grizzly.SkeletonMainWrapper",
+                    "Class-Path": configurations.compile.collect { "./libs/" + it.getName() }.join(" ")
+            )
+        }
+    }
+
     apply(from: urlCache.get("https://raw.githubusercontent.com/tioga/build-scripts/master/build-config-deployer.gradle"))
+
+    task pws(type: Copy, dependsOn: assemble) {
+        from "./build/libs/tioga-skeleton-engine-${project.version}.jar"
+        into "./build/pws/"
+        rename "tioga-skeleton-engine-${project.version}.jar", "tioga-skeleton-engine.jar"
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
