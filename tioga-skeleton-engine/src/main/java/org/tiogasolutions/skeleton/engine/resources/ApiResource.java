@@ -28,10 +28,10 @@ public class ApiResource {
 
     @GET
     @Produces(InetMediaType.APPLICATION_JSON_VALUE)
-    public Response getApiRoot() {
+    public Response getApiRoot(@DefaultValue("LINKS") @QueryParam("detailLevel") DetailLevel detailLevel) {
 
         PubLinks pubLinks = new PubLinks();
-        URI uri = utils.getAccountsUri(0, PubAccounts.DEFAULT_PAGE_SIZE);
+        URI uri = utils.getAccountsUri(0, PubAccounts.DEFAULT_PAGE_SIZE, detailLevel);
         pubLinks.add("accounts", uri);
 
         PubItem<PubLinks> pubItem = new PubItem<>(pubLinks);
@@ -57,10 +57,18 @@ public class ApiResource {
     @GET
     @Path("/accounts/{accountId}")
     @Produces(InetMediaType.APPLICATION_JSON_VALUE)
-    public Response getAccount(@PathParam("accountId") String accountId) throws Exception {
+    public Response getAccount(@DefaultValue("LINKS") @QueryParam("detailLevel") DetailLevel detailLevel,
+                               @PathParam("accountId") String accountId) throws Exception {
+
         Account account = accountStore.findById(accountId);
-        PubAccount pubAccount = utils.convert(account);
-        PubLinks links = utils.toLinks(account);
-        return utils.ok(new PubItem<>(links, pubAccount));
+        PubLinks links = utils.toLinks(account, detailLevel);
+
+        if (DetailLevel.LINKS == detailLevel) {
+            return utils.ok(new PubItem<>(links));
+
+        } else {
+            PubAccount pubAccount = utils.convert(account);
+            return utils.ok(new PubItem<>(links, pubAccount));
+        }
     }
 }
