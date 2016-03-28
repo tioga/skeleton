@@ -38,7 +38,12 @@
         <button type="submit" class="btn btn-default">Sign In</button>
     </form>
 
-    <div style="margin: 5em 0 1em 0">Need an a count?</div>
+    <div style="margin: 3em 0 1em 0">
+        <a href="api">Want to explore our REST API?</a><br/>
+        If you do, the username is <strong>admin</strong><br/>and password is a <strong>secret</strong>.
+    </div>
+
+    <div style="margin-top: 3em; text-decoration: underline">Need an a count?</div>
     <div th:each="account : ${it.getAccounts()}">
         <a th:onclick="'$(\'#email\').val(\'' + ${account.getEmail()} + '\'); $(\'#password\').val(\'' + ${account.getPassword()} + '\'); return false;'" href="#">
             <span th:text="${account.getFirstName()}"></span>

@@ -10,7 +10,7 @@
 
   <bean class="org.tiogasolutions.lib.spring.TiogaPropertyPlaceholderConfigurer">
     <constructor-arg index="0" value="TIOGA_SECRET_PROPERTIES_FILE"/>
-    <constructor-arg index="1" value="classpath:/tioga-skeleton-grizzly/spring.properties"/>
+    <constructor-arg index="1" value="classpath:/tioga-skeleton-engine/spring.properties"/>
   </bean>
 
   <context:component-scan base-package="org.tiogasolutions.skeleton"/>

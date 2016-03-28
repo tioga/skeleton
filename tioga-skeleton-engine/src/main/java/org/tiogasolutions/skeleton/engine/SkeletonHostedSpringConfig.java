@@ -1,4 +1,4 @@
-package org.tiogasolutions.skeleton.grizzly;
+package org.tiogasolutions.skeleton.engine;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;

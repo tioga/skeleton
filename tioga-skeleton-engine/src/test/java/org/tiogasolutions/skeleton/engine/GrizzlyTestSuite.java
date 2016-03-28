@@ -1,4 +1,4 @@
-package org.tiogasolutions.skeleton.grizzly;
+package org.tiogasolutions.skeleton.engine;
 
 import ch.qos.logback.classic.Level;
 import org.testng.annotations.BeforeSuite;

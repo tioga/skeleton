@@ -1,0 +1,21 @@
+---
+applications:
+- name: tioga-skeleton
+
+  timeout: 180
+  #buildpack: java_buildpack
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  path: build/pws/tioga-skeleton-engine.jar
+
+  memory: 256M
+  host: skeleton
+  domain: tioga.solutions
+
+  env:
+    # _JAVA_OPTIONS: -Xmx64M -XX:MaxMetaspaceSize=20M
+    # JBP_CONFIG_ORACLE_JRE: '[jre: {repository_root: "https://tioga.s3-website-us-west-1.amazonaws.com"}]'
+    # JBP_CONFIG_COMPONENTS: '[jres: ["JavaBuildpack::Jre::OracleJRE"]]'
+
+    skeleton.hostName: 0.0.0.0
+    skeleton.port: 8080
+    skeleton.shutdownPort: 8081

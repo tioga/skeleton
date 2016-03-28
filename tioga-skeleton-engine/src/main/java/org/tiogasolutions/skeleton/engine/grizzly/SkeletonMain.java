@@ -1,4 +1,4 @@
-package org.tiogasolutions.skeleton.grizzly;
+package org.tiogasolutions.skeleton.engine.grizzly;
 
 import ch.qos.logback.classic.Level;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class SkeletonMain {
         Path logbackFile = AppUtils.initLogback(configDir, PREFIX+".log.config", "logback.xml");
 
         // Locate the spring file for this app.
-        String springConfigPath = resolver.resolveSpringPath(configDir, format("classpath:/tioga-%s-grizzly/spring-config.xml", PREFIX));
+        String springConfigPath = resolver.resolveSpringPath(configDir, format("classpath:/tioga-%s-engine/spring-config.xml", PREFIX));
         String[] activeProfiles = resolver.resolveSpringProfiles(); // defaults to "hosted"
 
         boolean shuttingDown = asList(args).contains("-shutdown");
