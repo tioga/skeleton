@@ -28,6 +28,7 @@ import org.tiogasolutions.runners.grizzly.GrizzlyServerConfig;
 import org.tiogasolutions.skeleton.engine.kernel.CouchServersConfig;
 import org.tiogasolutions.skeleton.engine.mock.AccountStore;
 import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
+import org.tiogasolutions.skeleton.engine.mock.SkeletonRequestFilterDomainResolver;
 import org.tiogasolutions.skeleton.engine.support.SkeletonBasicRequestFilterAuthenticator;
 import org.tiogasolutions.skeleton.engine.support.SkeletonFormRequestFilterAuthenticator;
 
@@ -75,6 +76,11 @@ public class SkeletonHostedSpringConfig {
     @Bean
     public AccountStore accountStore() {
         return new AccountStore();
+    }
+
+    @Bean
+    public SkeletonRequestFilterDomainResolver skeletonRequestFilterDomainResolver(AccountStore accountStore, SessionStore sessionStore) {
+        return new SkeletonRequestFilterDomainResolver(accountStore, sessionStore);
     }
 
     @Bean

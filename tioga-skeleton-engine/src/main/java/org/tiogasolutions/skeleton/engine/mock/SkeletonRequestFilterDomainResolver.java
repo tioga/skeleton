@@ -1,14 +1,12 @@
 package org.tiogasolutions.skeleton.engine.mock;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.tiogasolutions.app.standard.jaxrs.filters.StandardRequestFilterDomainResolver;
 import org.tiogasolutions.app.standard.session.Session;
 import org.tiogasolutions.app.standard.session.SessionStore;
 
 import javax.ws.rs.container.ContainerRequestContext;
 
-@Component
 public class SkeletonRequestFilterDomainResolver implements StandardRequestFilterDomainResolver {
 
     private final AccountStore accountStore;
