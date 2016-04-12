@@ -4,7 +4,6 @@ applications:
 
   timeout: 180
   buildpack: java_buildpack
-  #buildpack: https://github.com/cloudfoundry/java-buildpack.git
   path: tioga-skeleton-engine/build/pws/tioga-skeleton-engine.jar
 
   memory: 256M

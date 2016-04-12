@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/skeleton.iml" filepath="$PROJECT_DIR$/.idea/modules/skeleton.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-engine/tioga-skeleton-engine.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-engine/tioga-skeleton-engine.iml" group="tioga-skeleton-engine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-engine/tioga-skeleton-engine_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-engine/tioga-skeleton-engine_main.iml" group="tioga-skeleton-engine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-engine/tioga-skeleton-engine_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-engine/tioga-skeleton-engine_test.iml" group="tioga-skeleton-engine" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub.iml" group="tioga-skeleton-pub" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_main.iml" group="tioga-skeleton-pub" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tioga-skeleton-pub/tioga-skeleton-pub_test.iml" group="tioga-skeleton-pub" />
+    </modules>
+  </component>
+</project>

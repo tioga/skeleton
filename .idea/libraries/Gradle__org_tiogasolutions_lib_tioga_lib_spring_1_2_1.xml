@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.tiogasolutions.lib:tioga-lib-spring:1.2.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-spring/1.2.1/c41851275ec5b752b1f7c126dae2bd6df40e3d1/tioga-lib-spring-1.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.tiogasolutions.lib/tioga-lib-spring/1.2.1/9eb523add16fd6f1b11bb172e5c78502122c5a70/tioga-lib-spring-1.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
