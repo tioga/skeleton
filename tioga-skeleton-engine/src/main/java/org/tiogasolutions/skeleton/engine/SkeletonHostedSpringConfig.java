@@ -17,7 +17,7 @@ import org.tiogasolutions.app.standard.jaxrs.filters.StandardResponseFilterConfi
 import org.tiogasolutions.app.standard.readers.BundledStaticContentReader;
 import org.tiogasolutions.app.standard.session.DefaultSessionStore;
 import org.tiogasolutions.app.standard.session.SessionStore;
-import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafMessageBodyWriterConfig;
+import org.tiogasolutions.app.thymeleaf.ThymeleafMessageBodyWriterConfig;
 import org.tiogasolutions.dev.jackson.TiogaJacksonModule;
 import org.tiogasolutions.dev.jackson.TiogaJacksonTranslator;
 import org.tiogasolutions.lib.couchace.DefaultCouchServer;
@@ -113,9 +113,7 @@ public class SkeletonHostedSpringConfig {
 
     @Bean
     public StandardResponseFilterConfig standardResponseFilterConfig() {
-        StandardResponseFilterConfig config = new StandardResponseFilterConfig();
-        config.getExtraHeaders().put(StandardResponseFilterConfig.P3P, "CP=\"The Skeleton App does not have a P3P policy.\"");
-        return config;
+        return new StandardResponseFilterConfig();
     }
 
     @Bean

@@ -1,7 +1,5 @@
 project(":tioga-skeleton-pub") {
 
-    apply plugin: 'distribution'
-
     version = skeletonPubVersion
 
     dependencies {

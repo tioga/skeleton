@@ -2,7 +2,7 @@ package org.tiogasolutions.skeleton.engine.mock;
 
 import org.tiogasolutions.app.standard.jaxrs.auth.StandardAuthenticationResponseFactory;
 import org.tiogasolutions.app.standard.session.SessionStore;
-import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafContent;
+import org.tiogasolutions.app.thymeleaf.ThymeleafContent;
 import org.tiogasolutions.dev.common.net.HttpStatusCode;
 import org.tiogasolutions.skeleton.engine.resources.RootResource;
 

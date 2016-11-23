@@ -14,7 +14,7 @@ import org.tiogasolutions.app.standard.jaxrs.filters.StandardResponseFilterConfi
 import org.tiogasolutions.app.standard.readers.MockContentReader;
 import org.tiogasolutions.app.standard.session.DefaultSessionStore;
 import org.tiogasolutions.app.standard.session.SessionStore;
-import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafMessageBodyWriterConfig;
+import org.tiogasolutions.app.thymeleaf.ThymeleafMessageBodyWriterConfig;
 import org.tiogasolutions.dev.jackson.TiogaJacksonModule;
 import org.tiogasolutions.lib.couchace.DefaultCouchServer;
 import org.tiogasolutions.notify.notifier.Notifier;
@@ -22,6 +22,7 @@ import org.tiogasolutions.notify.notifier.send.LoggingNotificationSender;
 import org.tiogasolutions.skeleton.engine.kernel.CouchServersConfig;
 import org.tiogasolutions.skeleton.engine.mock.AccountStore;
 import org.tiogasolutions.skeleton.engine.mock.SkeletonAuthenticationResponseFactory;
+import org.tiogasolutions.skeleton.engine.mock.SkeletonRequestFilterDomainResolver;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +48,11 @@ public class EngineSpringTestConfig {
         config.setPathSuffix(".html");
         config.setCacheable(true);
         return config;
+    }
+
+    @Bean
+    public SkeletonRequestFilterDomainResolver skeletonRequestFilterDomainResolver(AccountStore accountStore, SessionStore sessionStore) {
+        return new SkeletonRequestFilterDomainResolver(accountStore, sessionStore);
     }
 
     @Bean

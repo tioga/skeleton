@@ -13,7 +13,7 @@ import org.tiogasolutions.app.standard.jaxrs.filters.StandardRequestFilterConfig
 import org.tiogasolutions.app.standard.readers.StaticContentReader;
 import org.tiogasolutions.app.standard.session.Session;
 import org.tiogasolutions.app.standard.session.SessionStore;
-import org.tiogasolutions.app.standard.view.thymeleaf.ThymeleafContent;
+import org.tiogasolutions.app.thymeleaf.ThymeleafContent;
 import org.tiogasolutions.dev.common.EqualsUtils;
 import org.tiogasolutions.skeleton.engine.mock.Account;
 import org.tiogasolutions.skeleton.engine.mock.AccountStore;
